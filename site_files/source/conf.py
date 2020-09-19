@@ -7,7 +7,7 @@ import sphinx_rtd_theme
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('.trisight'))
+sys.path.insert(0, os.path.abspath('./trisight'))
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,

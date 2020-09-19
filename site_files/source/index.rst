@@ -1,10 +1,12 @@
-.. trisight documentation master file, created by
-   sphinx-quickstart on Sat Sep 19 13:17:00 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. trisight documentation master file.
 
-Welcome to trisight's documentation!
+Welcome to Trisight's documentation!
 ====================================
+
+This provides functions to analyze stock data.
+
+Functions
+==================
 
 .. toctree::
    :maxdepth: 3
