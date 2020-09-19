@@ -4,5 +4,5 @@ Trisight is a tool for stock analysis
 
 # Contributor
 
-Gaohua Zheng
-Zidiefeng
+- Gaohua Zheng
+- Zidiefeng
