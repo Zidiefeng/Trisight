@@ -6,7 +6,9 @@ def token_check(token):
     '''Check whether the token is okay
 
     Use example:
-        token_check("btj810748v6p9f1q5vpg")
+        .. code-block:: python
+
+            token_check("btj810748v6p9f1q5vpg")
 
     :param token:
         token to test
@@ -24,9 +26,11 @@ def token_check(token):
 
 def get_token(token):
     '''Check token. If not good, let the user to enter the right token.
-    
+
     Use example:
-        get_token("btj810748v6p9f1q5vpg")
+        .. code-block:: python
+
+            get_token("btj810748v6p9f1q5vpg")
 
     :param token: default token to check, can be empty if not know
     :type token: str

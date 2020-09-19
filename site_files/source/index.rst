@@ -5,7 +5,7 @@ Welcome to Trisight's documentation!
 
 This provides functions to analyze stock data.
 
-Functions
+Modules
 ==================
 
 .. toctree::

@@ -8,7 +8,9 @@ def quarterly_estimate_actual(stock_code, from_date, to_date, token):
     no info loss, no need to keep json
 
     Use example:
-        quarterly_estimate_actual("AAPL", "2019-08-31","2020-09-11","btapdan48v6stqoinlu0")
+        .. code-block:: python
+
+            quarterly_estimate_actual("AAPL", "2019-08-31","2020-09-11","btapdan48v6stqoinlu0")
 
     :param stock_code:
         stock code, ex. "AAPL"
