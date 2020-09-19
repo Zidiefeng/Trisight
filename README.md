@@ -30,15 +30,15 @@ make html
 
 7. Update docs for github page
 
-If Unix:
-```
-cp build\html\. ..\docs
-```
+    - If Unix:
+    ```
+    cp build\html\. ..\docs
+    ```
 
-If cmd (Windows):
-```
-copy build\html\. ..\docs
-```
+    - If cmd (Windows):
+    ```
+    copy build\html\. ..\docs
+    ```
 
 5. Check the website update
 
