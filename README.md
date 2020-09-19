@@ -19,8 +19,8 @@ pip install git+https://github.com/Zidiefeng/Trisight@dev
 2. Make and push changes, create pull request to `dev` branch
 3. Peer review and merge to `dev` branch
 4. Checkout branch `dev` and update docs by sphinx
-
-### Update html website:
+5. Change config file if added new module: `site_files\build\html\_sources\index.rst.txt`
+6. Update html website:
 
 ```
 pip install sphinx
@@ -28,7 +28,7 @@ cd Trisight/site_files
 make html
 ```
 
-### Update docs for github page
+7. Update docs for github page
 
 If Unix:
 ```
