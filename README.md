@@ -20,15 +20,23 @@ pip install git+https://github.com/Zidiefeng/Trisight@dev
 3. Peer review and merge to `dev` branch
 4. Checkout branch `dev` and update docs by sphinx
 
+### Update html website:
+
 ```
-# in /Trisight
-cd site_files
+pip install sphinx
+cd Trisight/site_files
 make html
+```
 
-# Unix
+### Update docs for github page
+
+If Unix:
+```
 cp build\html\. ..\docs
+```
 
-# cmd (Windows)
+If cmd (Windows):
+```
 copy build\html\. ..\docs
 ```
 
