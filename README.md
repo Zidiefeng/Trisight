@@ -44,5 +44,5 @@ copy build\html\. ..\docs
 
 # Contributor
 
-- Gaohua Zheng
+# Data scientist: Gaohua Zheng
 - Zidiefeng
