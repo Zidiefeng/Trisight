@@ -16,7 +16,7 @@ pip install git+https://github.com/Zidiefeng/Trisight@dev
 ## How to contribute
 
 1. Create a new branch off from `dev` branch
-2. Make changes, create pull request to `dev` branch
+2. Make and push changes, create pull request to `dev` branch
 3. Peer review and merge to `dev` branch
 4. Checkout branch `dev` and update docs by sphinx
 
