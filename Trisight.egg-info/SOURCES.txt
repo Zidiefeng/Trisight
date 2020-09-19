@@ -1,0 +1,13 @@
+setup.py
+Trisight.egg-info/MANIFEST.in
+Trisight.egg-info/PKG-INFO
+Trisight.egg-info/SOURCES.txt
+Trisight.egg-info/dependency_links.txt
+Trisight.egg-info/top_level.txt
+trisight/__init__.py
+trisight/timeT.py
+trisight.egg-info/MANIFEST.in
+trisight.egg-info/PKG-INFO
+trisight.egg-info/SOURCES.txt
+trisight.egg-info/dependency_links.txt
+trisight.egg-info/top_level.txt

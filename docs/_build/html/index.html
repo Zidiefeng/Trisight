@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Trisight’s documentation! &#8212; Trisight 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-trisight-s-documentation">
+<h1>Welcome to Trisight’s documentation!<a class="headerlink" href="#welcome-to-trisight-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-trisight"></span><span class="target" id="module-trisight.timeT"></span><dl class="py function">
+<dt id="trisight.timeT.dt_to_stamp">
+<code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">dt_to_stamp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#dt_to_stamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.dt_to_stamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer date time to timestamp
+Use example: dt_to_stamp(datetime.now())</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dt_str</strong> (<em>str</em>) – date time, such as ‘2020-09-01 11:15:49’ (%Y-%m-%d %H:%M:%S)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>transformed timestamp</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>timestamp</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.timeT.stamp_to_dt">
+<code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">stamp_to_dt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timestamp</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#stamp_to_dt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.stamp_to_dt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer timestamp to date time
+Use example: stamp_to_dt(1590988249)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timestamp</strong> (<em>timestamp</em>) – timestamp to be transformed</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>transformed date time</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.timeT.str_to_dt">
+<code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">str_to_dt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dt_str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#str_to_dt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.str_to_dt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer string format date time to date time
+Use example: str_to_dt(‘2020-09-01 11:15:50’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dt_str</strong> (<em>str</em>) – date time in string format, such as ‘2020-09-01 11:15:49’ (%Y-%m-%d %H:%M:%S)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>transformed date time</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.timeT.str_to_stamp">
+<code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">str_to_stamp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dt_str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#str_to_stamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.str_to_stamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer string to timestamp
+Use example: str_to_stamp(‘2020-09-01 11:15:50’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dt_str</strong> (<em>str</em>) – string date time, such as ‘2020-09-01 11:15:49’ (%Y-%m-%d %H:%M:%S)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>transformed timestamp</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>timestamp</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Trisight</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kaitan Sun, Gaohua Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
