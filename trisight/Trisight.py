@@ -19,6 +19,8 @@ from dateutil.relativedelta import *
 pd.set_option('display.max_columns', None)
 finnhub_client = finnhub.Client(api_key="bt2sfov48v6sqcs91f30")
 
+token='btapdan48v6stqoinlu0'
+
 # from timestamp to date time
 def stamp_to_dt(timestamp):
     dt = datetime.datetime.fromtimestamp(timestamp)
@@ -46,7 +48,9 @@ def str_to_stamp(dt_str):
 #############################################################################################################################
 def Earning_Calander(stock_code, from_date, to_date):
     #如果要锁定公司：https://finnhub.io/api/v1/calendar/earnings?from=2020-03-12&to=2020-03-15&symbol=ORBT&token=bt2sfov48v6sqcs91f30
-    EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token=btapdan48v6stqoinlu0'.format(from_date,to_date,stock_code)
+
+    EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token={}'.format(from_date,to_date,stock_code,token)
+
     EC=requests.get(EC_string)
     print(EC.json()['earningsCalendar'])
     
@@ -62,7 +66,9 @@ def EPS_latest_estimate(stock_code, to_date):
     to_date_future=str_to_dt(to_date)+relativedelta(months=+1)
     from_date=str_to_dt(to_date)+relativedelta(months=-3)
     #如果要锁定公司：https://finnhub.io/api/v1/calendar/earnings?from=2020-03-12&to=2020-03-15&symbol=ORBT&token=bt2sfov48v6sqcs91f30
-    EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token=btapdan48v6stqoinlu0'.format(from_date,to_date_future,stock_code)
+
+    EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token={}'.format(from_date,to_date_future,stock_code,token)
+
     EC=requests.get(EC_string)
     print(EC.json()['earningsCalendar'])
     return pd.DataFrame(EC.json()['earningsCalendar'])['epsEstimate'][0]
@@ -71,27 +77,27 @@ def EPS_latest_actual(stock_code, to_date):
     to_date_future=str_to_dt(to_date)+relativedelta(months=+1)
     from_date=str_to_dt(to_date)+relativedelta(months=-3)
     #如果要锁定公司：https://finnhub.io/api/v1/calendar/earnings?from=2020-03-12&to=2020-03-15&symbol=ORBT&token=bt2sfov48v6sqcs91f30
-    EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token=btapdan48v6stqoinlu0'.format(from_date,to_date_future,stock_code)
+    EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token={}'.format(from_date,to_date_future,stock_code,token)
     EC=requests.get(EC_string)
     print(EC.json()['earningsCalendar'])
     
     return pd.DataFrame(EC.json()['earningsCalendar'])['epsActual'][1]
 #############################################################################################################################
 def Latest_Reported_Financial_bs(stock_code):
-    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token=btapdan48v6stqoinlu0'.format(stock_code)
+    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token={}'.format(stock_code,token)
     RF=requests.get(RF_string)
     return pd.DataFrame(RF.json()['data'][0]['report']['bs'])
 def Latest_Reported_Financial_cf(stock_code):
-    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token=btapdan48v6stqoinlu0'.format(stock_code)
+    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token={}'.format(stock_code,token)
     RF=requests.get(RF_string)
     return pd.DataFrame(RF.json()['data'][0]['report']['cf'])
 def Latest_Reported_Financial_ic(stock_code):
-    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token=btapdan48v6stqoinlu0'.format(stock_code)
+    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token={}'.format(stock_code,token)
     RF=requests.get(RF_string)
     return pd.DataFrame(RF.json()['data'][0]['report']['ic'])
 
 def RF_calender(stock_code):
-    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token=btapdan48v6stqoinlu0'.format(stock_code)
+    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token={}'.format(stock_code,token)
     RF=requests.get(RF_string)
     RF_calender={}
     for i in range(len(RF.json()['data'])):
@@ -110,7 +116,7 @@ def search_RF(stock_code, target_date):
     return target_RF_date
 
 def RF_date_info(stock_code):
-    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token=btapdan48v6stqoinlu0'.format(stock_code)
+    RF_string='https://finnhub.io/api/v1/stock/financials-reported?symbol={}&freq=quarterly&token={}'.format(stock_code,token)
     RF=requests.get(RF_string)
     RF_date_info={}
     for i in range(len(RF.json()['data'])):        
@@ -128,17 +134,42 @@ def RF_date_info(stock_code):
 def search_RF_bs(stock_code, target_date):
     RF_info=RF_date_info(stock_code)[search_RF(stock_code, target_date)]
     RF_target_bs=pd.DataFrame(RF_calender(stock_code)[search_RF(stock_code, target_date)]['bs'])
-    RF_target_bs=RF_target_bs.set_index('label')
+    if len(RF_target_bs) ==0:
+        RF_target_bs='Cannot find cf data based on this target date!'
+    else:
+        RF_target_bs=RF_target_bs.set_index('label')
     return RF_info,RF_target_bs
+
+def search_RF_cf(stock_code, target_date):
+    RF_info=RF_date_info(stock_code)[search_RF(stock_code, target_date)]
+    RF_target_cf=pd.DataFrame(RF_calender(stock_code)[search_RF(stock_code, target_date)]['cf'])
+    if len(RF_target_cf) ==0:
+        RF_target_cf='Cannot find cf data based on this target date!'
+    else:
+        RF_target_cf=RF_target_cf.set_index('label')
+    return RF_info,RF_target_cf
+
+def search_RF_ic(stock_code, target_date):
+    RF_info=RF_date_info(stock_code)[search_RF(stock_code, target_date)]
+    RF_target_ic=pd.DataFrame(RF_calender(stock_code)[search_RF(stock_code, target_date)]['ic'])
+    if len(RF_target_ic) ==0:
+        RF_target_ic='Cannot find cf data based on this target date!'
+    else:
+        pass
+        #RF_target_ic=RF_target_ic.set_index('label')
+    return RF_info,RF_target_ic
+
 def ratio(value1,value2):
     ratio=value1/value2
     return round(ratio,2)
 total_current_asset=search_RF_bs('AAPL','2020-07-29 00:00:00')[1].loc['Total current assets']['value']
 total_current_liability=search_RF_bs('AAPL','2020-07-29 00:00:00')[1].loc['Total current liabilities']['value']
 total_current_ratio=ratio(total_current_asset,total_current_liability)
+
 def financial_ratio_list(stock_code,target_date):
+    #example: financial_ratio_list('AAPL','2020-07-29 00:00:00')
     #Total current ratio
-    RF_target_bs=search_RF_bs('AAPL','2020-07-29 00:00:00')[1]
+    RF_target_bs=search_RF_bs(stock_code,target_date)[1]
     total_current_asset=RF_target_bs.loc['Total current assets']['value']
     total_current_liability=RF_target_bs.loc['Total current liabilities']['value']
     total_current_ratio=ratio(total_current_asset,total_current_liability)
@@ -147,11 +178,22 @@ def financial_ratio_list(stock_code,target_date):
     quick_ratio=ratio(quick_asset,total_current_liability)
     #保守速动比率，现金比率，现金流量比率都没有计算
     
-    #Asset Liability Ratio
+
+    #Debt Ratio
     total_liability=RF_target_bs.loc['Total liabilities']['value']
     total_asset=RF_target_bs.loc['Total assets']['value']
-    asset_liability_ratio=ratio(total_liability,total_asset)
+    Debt_Ratio=ratio(total_liability,total_asset)
+    
+    
     
     return {'total_current_ratio':total_current_ratio, 
             'quick_ratio':quick_ratio,
-            'asset_liability_ratio':asset_liability_ratio}
+            'Debt_Ratio':Debt_Ratio}
+
+#获取annual financial analysis data
+
+def annual_basic_financial(stock_code):
+    ABF_string='https://finnhub.io/api/v1/stock/metric?symbol={}&metric=all&token={}'.format(stock_code,token)
+    EC=requests.get(ABF_string)
+    return EC.json()
+
