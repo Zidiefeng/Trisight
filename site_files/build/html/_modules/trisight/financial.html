@@ -146,6 +146,8 @@
   <h1>Source code for trisight.financial</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">trisight</span> <span class="kn">import</span> <span class="n">token_check</span>
+<span class="kn">from</span> <span class="nn">trisight</span> <span class="kn">import</span> <span class="n">timeT</span> <span class="k">as</span> <span class="n">t</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_rows&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -215,11 +217,50 @@
     <span class="n">annual_reports</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 
     <span class="c1"># integrate reports, sort</span>
-    <span class="n">reports</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">quarter_reports</span><span class="p">,</span><span class="n">annual_reports</span><span class="p">])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;quarter&#39;</span><span class="p">,</span><span class="s1">&#39;cik&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">reports</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">quarter_reports</span><span class="p">,</span><span class="n">annual_reports</span><span class="p">])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;quarter&#39;</span><span class="p">,</span><span class="s1">&#39;cik&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;filedDate&#39;</span><span class="p">],</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># drop duplicates due to different set of cik</span>
     <span class="n">reports</span> <span class="o">=</span> <span class="n">reports</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span><span class="s1">&#39;quarter&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">reports</span></div>
+
+
+<div class="viewcode-block" id="extract_last_file_date"><a class="viewcode-back" href="../../index.html#trisight.financial.extract_last_file_date">[docs]</a><span class="k">def</span> <span class="nf">extract_last_file_date</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span> <span class="n">target_datetime</span><span class="p">,</span> <span class="n">restrict_to_90d</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Get the report file date of a company right before target date time within 90d/1y</span>
+
+<span class="sd">    Use example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            extract_last_file_date(&quot;AAL&quot;, &quot;2020-09-20 00:00:00&quot;)</span>
+<span class="sd">            extract_last_file_date(&quot;AAL&quot;, &quot;2020-09-20 00:00:00&quot;, restrict_to_90d = False)</span>
+
+<span class="sd">    :param stock_code: stock code, ex. &quot;AAPL&quot;</span>
+<span class="sd">    :type stock_code: str</span>
+
+<span class="sd">    :param target_datetime: target date time, &quot;2019-10-24 00:00:00&quot;</span>
+<span class="sd">    :type target_datetime: str</span>
+
+
+<span class="sd">    :param token: token, optional, ex.&quot;btapdan48v6stqoinlu0&quot;</span>
+<span class="sd">    :type token: str</span>
+
+<span class="sd">    :returns: file date right before 90d/1y **or** False (if not found)</span>
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">date_list</span><span class="o">=</span> <span class="n">extract_reports</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span><span class="n">token</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">last_file_date</span><span class="o">=</span> <span class="kc">False</span>
+    <span class="n">restrict_days</span><span class="o">=</span><span class="mi">93</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">restrict_to_90d</span><span class="p">:</span>
+        <span class="n">restrict_days</span><span class="o">=</span><span class="mi">365</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">date_list</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">str_to_dt</span><span class="p">(</span><span class="n">target_datetime</span><span class="p">)</span>
+        <span class="n">fileDate</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">str_to_dt</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">fileDate</span> <span class="o">&gt;=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span><span class="n">fileDate</span> <span class="o">&lt;=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">restrict_days</span><span class="p">)):</span>
+            <span class="n">last_file_date</span><span class="o">=</span><span class="n">i</span>
+            <span class="k">break</span>
+    <span class="k">if</span> <span class="n">last_file_date</span><span class="o">==</span> <span class="kc">False</span> <span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cannot find the avaliable reported financial based on this target date!&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">last_file_date</span></div>
 </pre></div>
 
            </div>

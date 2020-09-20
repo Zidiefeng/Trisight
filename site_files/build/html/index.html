@@ -262,6 +262,34 @@
 <h2>financial<a class="headerlink" href="#financial" title="Permalink to this headline">¶</a></h2>
 <p>financial info analysis</p>
 <span class="target" id="module-trisight.financial"></span><dl class="py function">
+<dt id="trisight.financial.extract_last_file_date">
+<code class="sig-prename descclassname">trisight.financial.</code><code class="sig-name descname">extract_last_file_date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stock_code</span></em>, <em class="sig-param"><span class="n">target_datetime</span></em>, <em class="sig-param"><span class="n">restrict_to_90d</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">'btj810748v6p9f1q5vpg'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/financial.html#extract_last_file_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.financial.extract_last_file_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the report file date of a company right before target date time within 90d/1y</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extract_last_file_date</span><span class="p">(</span><span class="s2">&quot;AAL&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-09-20 00:00:00&quot;</span><span class="p">)</span>
+<span class="n">extract_last_file_date</span><span class="p">(</span><span class="s2">&quot;AAL&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-09-20 00:00:00&quot;</span><span class="p">,</span> <span class="n">restrict_to_90d</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stock_code</strong> (<em>str</em>) – stock code, ex. “AAPL”</p></li>
+<li><p><strong>target_datetime</strong> (<em>str</em>) – target date time, “2019-10-24 00:00:00”</p></li>
+<li><p><strong>token</strong> (<em>str</em>) – token, optional, ex.”btapdan48v6stqoinlu0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>file date right before 90d/1y <strong>or</strong> False (if not found)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="trisight.financial.extract_reports">
 <code class="sig-prename descclassname">trisight.financial.</code><code class="sig-name descname">extract_reports</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stock_code</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">'btj810748v6p9f1q5vpg'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/financial.html#extract_reports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.financial.extract_reports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all finantial statements (balance sheet, income statement, cash flow) of a company</p>

@@ -1,5 +1,7 @@
 import requests
 from trisight import token_check
+from trisight import timeT as t
+import datetime
 import pandas as pd
 pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", None)
@@ -69,8 +71,47 @@ def extract_reports(stock_code,token=token):
     annual_reports = pd.DataFrame(req)
 
     # integrate reports, sort
-    reports = pd.concat([quarter_reports,annual_reports]).sort_values(by=['year', 'quarter','cik'], ascending=[False,False,True]).reset_index()
+    reports = pd.concat([quarter_reports,annual_reports]).sort_values(by=['year', 'quarter','cik'], ascending=[False,False,True]).set_index(['filedDate'],drop=True)
 
     # drop duplicates due to different set of cik
     reports = reports.drop_duplicates(subset=['year','quarter'])
     return reports
+
+
+def extract_last_file_date(stock_code, target_datetime, restrict_to_90d = True, token=token):
+    '''Get the report file date of a company right before target date time within 90d/1y
+
+    Use example:
+        .. code-block:: python
+
+            extract_last_file_date("AAL", "2020-09-20 00:00:00")
+            extract_last_file_date("AAL", "2020-09-20 00:00:00", restrict_to_90d = False)
+
+    :param stock_code: stock code, ex. "AAPL"
+    :type stock_code: str
+
+    :param target_datetime: target date time, "2019-10-24 00:00:00"
+    :type target_datetime: str
+
+
+    :param token: token, optional, ex."btapdan48v6stqoinlu0"
+    :type token: str
+
+    :returns: file date right before 90d/1y **or** False (if not found)
+    :rtype: str
+
+    '''
+    date_list= extract_reports(stock_code,token).index
+    last_file_date= False
+    restrict_days=93
+    if not restrict_to_90d:
+        restrict_days=365
+    for i in date_list:
+        target = t.str_to_dt(target_datetime)
+        fileDate = t.str_to_dt(i)
+        if (target - fileDate >= datetime.timedelta(0)) and (target -fileDate <= datetime.timedelta(restrict_days)):
+            last_file_date=i
+            break
+    if last_file_date== False :
+        print('Cannot find the avaliable reported financial based on this target date!')
+    return last_file_date
