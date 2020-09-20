@@ -18,7 +18,9 @@ from datetime import timedelta
 from dateutil.relativedelta import *
 pd.set_option('display.max_columns', None)
 finnhub_client = finnhub.Client(api_key="bt2sfov48v6sqcs91f30")
+
 token='btapdan48v6stqoinlu0'
+
 # from timestamp to date time
 def stamp_to_dt(timestamp):
     dt = datetime.datetime.fromtimestamp(timestamp)
@@ -46,7 +48,9 @@ def str_to_stamp(dt_str):
 #############################################################################################################################
 def Earning_Calander(stock_code, from_date, to_date):
     #如果要锁定公司：https://finnhub.io/api/v1/calendar/earnings?from=2020-03-12&to=2020-03-15&symbol=ORBT&token=bt2sfov48v6sqcs91f30
+
     EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token={}'.format(from_date,to_date,stock_code,token)
+
     EC=requests.get(EC_string)
     print(EC.json()['earningsCalendar'])
     
@@ -62,7 +66,9 @@ def EPS_latest_estimate(stock_code, to_date):
     to_date_future=str_to_dt(to_date)+relativedelta(months=+1)
     from_date=str_to_dt(to_date)+relativedelta(months=-3)
     #如果要锁定公司：https://finnhub.io/api/v1/calendar/earnings?from=2020-03-12&to=2020-03-15&symbol=ORBT&token=bt2sfov48v6sqcs91f30
+
     EC_string='https://finnhub.io/api/v1/calendar/earnings?from={}&to={}&symbol={}&token={}'.format(from_date,to_date_future,stock_code,token)
+
     EC=requests.get(EC_string)
     print(EC.json()['earningsCalendar'])
     return pd.DataFrame(EC.json()['earningsCalendar'])['epsEstimate'][0]
@@ -172,6 +178,7 @@ def financial_ratio_list(stock_code,target_date):
     quick_ratio=ratio(quick_asset,total_current_liability)
     #保守速动比率，现金比率，现金流量比率都没有计算
     
+
     #Debt Ratio
     total_liability=RF_target_bs.loc['Total liabilities']['value']
     total_asset=RF_target_bs.loc['Total assets']['value']
@@ -189,7 +196,4 @@ def annual_basic_financial(stock_code):
     ABF_string='https://finnhub.io/api/v1/stock/metric?symbol={}&metric=all&token={}'.format(stock_code,token)
     EC=requests.get(ABF_string)
     return EC.json()
-
-
-
 
