@@ -239,6 +239,8 @@
 <span class="sd">    :param target_datetime: target date time, &quot;2019-10-24 00:00:00&quot;</span>
 <span class="sd">    :type target_datetime: str</span>
 
+<span class="sd">    :param restrict_to_90d: default is True(only check previous 90d), False(check previous 1y)</span>
+<span class="sd">    :type restrict_to_90d: bool</span>
 
 <span class="sd">    :param token: token, optional, ex.&quot;btapdan48v6stqoinlu0&quot;</span>
 <span class="sd">    :type token: str</span>
@@ -259,8 +261,55 @@
             <span class="n">last_file_date</span><span class="o">=</span><span class="n">i</span>
             <span class="k">break</span>
     <span class="k">if</span> <span class="n">last_file_date</span><span class="o">==</span> <span class="kc">False</span> <span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cannot find the avaliable reported financial based on this target date!&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No avaliable reports for </span><span class="si">{</span><span class="n">stock_code</span><span class="si">}</span><span class="s1"> within </span><span class="si">{</span><span class="n">restrict_days</span><span class="si">}</span><span class="s1"> days before </span><span class="si">{</span><span class="n">target_datetime</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">last_file_date</span></div>
+
+
+<div class="viewcode-block" id="extract_recent_reports"><a class="viewcode-back" href="../../index.html#trisight.financial.extract_recent_reports">[docs]</a><span class="k">def</span> <span class="nf">extract_recent_reports</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span><span class="n">target_datetime</span><span class="p">,</span><span class="n">restrict_to_90d</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">):</span>
+    
+    <span class="sd">&#39;&#39;&#39;Get the most recent report dict of a company right before target date time within 90d/1y</span>
+
+<span class="sd">    Use example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            extract_recent_reports(&quot;AAL&quot;, &quot;2020-09-20 00:00:00&quot;)</span>
+<span class="sd">            extract_recent_reports(stock_code=&quot;AAL&quot;,target_datetime=&quot;2020-09-26 00:00:00&quot;, restrict_to_90d=False)</span>
+
+<span class="sd">    :param stock_code: stock code, ex. &quot;AAPL&quot;</span>
+<span class="sd">    :type stock_code: str</span>
+
+<span class="sd">    :param target_datetime: target date time, &quot;2019-10-24 00:00:00&quot;</span>
+<span class="sd">    :type target_datetime: str</span>
+
+<span class="sd">    :param restrict_to_90d: default is True(only check previous 90d), False(check previous 1y)</span>
+<span class="sd">    :type restrict_to_90d: bool</span>
+
+<span class="sd">    :param token: token, optional, ex.&quot;btapdan48v6stqoinlu0&quot;</span>
+<span class="sd">    :type token: str</span>
+
+<span class="sd">    :returns: recent report dict (keys: [&quot;balanceSheet&quot;,&quot;incomeStatement&quot;,&quot;cashFlow&quot;], each can extract a dataframe)</span>
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">reports</span> <span class="o">=</span> <span class="n">extract_reports</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span><span class="n">token</span><span class="p">)</span>
+    <span class="n">file_date</span> <span class="o">=</span> <span class="n">extract_last_file_date</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span> <span class="n">target_datetime</span><span class="p">,</span> <span class="n">restrict_to_90d</span><span class="o">=</span><span class="n">restrict_to_90d</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">file_date</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s2">&quot;report&quot;</span><span class="p">][</span><span class="s2">&quot;bs&quot;</span><span class="p">])</span>
+        <span class="n">ic</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s2">&quot;report&quot;</span><span class="p">][</span><span class="s2">&quot;ic&quot;</span><span class="p">])</span>
+        <span class="n">cf</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s2">&quot;report&quot;</span><span class="p">][</span><span class="s2">&quot;cf&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">bs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No balance sheet available for </span><span class="si">{</span><span class="n">stock_code</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">file_date</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ic</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No income statement available for </span><span class="si">{</span><span class="n">stock_code</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">file_date</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No cash flow report available for </span><span class="si">{</span><span class="n">stock_code</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">file_date</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+        <span class="n">reports_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;balanceSheet&quot;</span><span class="p">:</span> <span class="n">bs</span><span class="p">,</span>
+                        <span class="s2">&quot;incomeStatement&quot;</span><span class="p">:</span> <span class="n">ic</span><span class="p">,</span>
+                        <span class="s2">&quot;cashFlow&quot;</span><span class="p">:</span> <span class="n">cf</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">reports_dict</span></div>
 </pre></div>
 
            </div>

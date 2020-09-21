@@ -93,6 +93,8 @@ def extract_last_file_date(stock_code, target_datetime, restrict_to_90d = True, 
     :param target_datetime: target date time, "2019-10-24 00:00:00"
     :type target_datetime: str
 
+    :param restrict_to_90d: default is True(only check previous 90d), False(check previous 1y)
+    :type restrict_to_90d: bool
 
     :param token: token, optional, ex."btapdan48v6stqoinlu0"
     :type token: str
@@ -113,5 +115,59 @@ def extract_last_file_date(stock_code, target_datetime, restrict_to_90d = True, 
             last_file_date=i
             break
     if last_file_date== False :
-        print('Cannot find the avaliable reported financial based on this target date!')
+        print(f'No avaliable reports for {stock_code} within {restrict_days} days before {target_datetime}!')
     return last_file_date
+
+
+def extract_recent_reports(stock_code,target_datetime,restrict_to_90d = True, token=token):
+
+    '''Get the most recent report dict of a company <= target date time (within 90d/1y)
+
+    Use example:
+        .. code-block:: python
+
+            extract_recent_reports("AAL", "2020-09-20 00:00:00")
+            extract_recent_reports(stock_code="AAL",target_datetime="2020-09-26 00:00:00", restrict_to_90d=False)
+
+    :param stock_code: stock code, ex. "AAPL"
+    :type stock_code: str
+
+    :param target_datetime: target date time, "2019-10-24 00:00:00"
+    :type target_datetime: str
+
+    :param restrict_to_90d: default is True(only check previous 90d), False(check previous 1y)
+    :type restrict_to_90d: bool
+
+    :param token: token, optional, ex."btapdan48v6stqoinlu0"
+    :type token: str
+
+    :returns: recent report dict (keys: ["balanceSheet","incomeStatement","cashFlow", ...], each can extract a dataframe)
+    :rtype: dict
+
+    '''
+
+    reports = extract_reports(stock_code,token)
+    file_date = extract_last_file_date(stock_code, target_datetime, restrict_to_90d=restrict_to_90d, token=token)
+    if file_date==False:
+        return False
+    else:
+        bs=pd.DataFrame(reports.loc[file_date]["report"]["bs"])
+        ic=pd.DataFrame(reports.loc[file_date]["report"]["ic"])
+        cf=pd.DataFrame(reports.loc[file_date]["report"]["cf"])
+        if bs.shape[0] == 0:
+            print(f"No balance sheet available for {stock_code} at {file_date}")
+        if ic.shape[0] == 0:
+            print(f"No income statement available for {stock_code} at {file_date}!")
+        if cf.shape[0] == 0:
+            print(f"No cash flow report available for {stock_code} at {file_date}!")
+        reports_dict = {'symbol':reports.loc[file_date]['symbol'],
+                        'year':reports.loc[file_date]['year'],
+                        'quarter':reports.loc[file_date]['quarter'],
+                        'form':reports.loc[file_date]['form'],
+                        'startDate':reports.loc[file_date]['startDate'],
+                        'endDate':reports.loc[file_date]['endDate'],
+                        'fileDate':file_date,
+                        "balanceSheet": bs,
+                        "incomeStatement": ic,
+                        "cashFlow": cf}
+        return reports_dict
