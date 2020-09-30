@@ -148,11 +148,47 @@
 <span class="kn">from</span> <span class="nn">trisight</span> <span class="kn">import</span> <span class="n">token_check</span>
 <span class="kn">from</span> <span class="nn">trisight</span> <span class="kn">import</span> <span class="n">timeT</span> <span class="k">as</span> <span class="n">t</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_rows&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
 <span class="n">token</span> <span class="o">=</span> <span class="n">token_check</span><span class="o">.</span><span class="n">get_token</span><span class="p">(</span><span class="n">token_check</span><span class="o">.</span><span class="n">token</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="next_release_date"><a class="viewcode-back" href="../../index.html#trisight.financial.next_release_date">[docs]</a><span class="k">def</span> <span class="nf">next_release_date</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span> <span class="n">n_months</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Get next release date (string) within n months from today</span>
+
+<span class="sd">    Use example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            next_release_date(&quot;AAPL&quot;,n_months=1)</span>
+
+<span class="sd">    :param stock_code: stock code, ex. &quot;AAPL&quot;</span>
+<span class="sd">    :type stock_code: str</span>
+
+<span class="sd">    :param n_months: how many months ahead to search release date (defualt=3)</span>
+<span class="sd">    :type n_months: int</span>
+
+<span class="sd">    :param token: token, optional, ex.&quot;btapdan48v6stqoinlu0&quot;</span>
+<span class="sd">    :type token: str</span>
+
+<span class="sd">    :returns: string date (if exists), False (if not exists)</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">months_later</span> <span class="o">=</span> <span class="n">now</span><span class="o">+</span><span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=+</span><span class="n">n_months</span><span class="p">)</span>
+    <span class="n">str_today</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">str_m_after</span> <span class="o">=</span> <span class="n">months_later</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">=</span><span class="n">quarterly_estimate_actual</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">str_m_after</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">stock_code</span><span class="si">}</span><span class="s2"> future release found within </span><span class="si">{</span><span class="n">n_months</span><span class="si">}</span><span class="s2"> months from today&quot;</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
 
 <div class="viewcode-block" id="quarterly_estimate_actual"><a class="viewcode-back" href="../../index.html#trisight.financial.quarterly_estimate_actual">[docs]</a><span class="k">def</span> <span class="nf">quarterly_estimate_actual</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span> <span class="n">from_date</span><span class="p">,</span> <span class="n">to_date</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Get estimate vs. actual EPS and revenue of each quarterly report (no info loss)</span>
@@ -266,8 +302,8 @@
 
 
 <div class="viewcode-block" id="extract_recent_reports"><a class="viewcode-back" href="../../index.html#trisight.financial.extract_recent_reports">[docs]</a><span class="k">def</span> <span class="nf">extract_recent_reports</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span><span class="n">target_datetime</span><span class="p">,</span><span class="n">restrict_to_90d</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">):</span>
-    
-    <span class="sd">&#39;&#39;&#39;Get the most recent report dict of a company right before target date time within 90d/1y</span>
+
+    <span class="sd">&#39;&#39;&#39;Get the most recent report dict of a company &lt;= target date time (within 90d/1y)</span>
 
 <span class="sd">    Use example:</span>
 <span class="sd">        .. code-block:: python</span>
@@ -287,11 +323,11 @@
 <span class="sd">    :param token: token, optional, ex.&quot;btapdan48v6stqoinlu0&quot;</span>
 <span class="sd">    :type token: str</span>
 
-<span class="sd">    :returns: recent report dict (keys: [&quot;balanceSheet&quot;,&quot;incomeStatement&quot;,&quot;cashFlow&quot;], each can extract a dataframe)</span>
+<span class="sd">    :returns: recent report dict (keys: [&quot;balanceSheet&quot;,&quot;incomeStatement&quot;,&quot;cashFlow&quot;, ...], each can extract a dataframe)</span>
 <span class="sd">    :rtype: dict</span>
 
 <span class="sd">    &#39;&#39;&#39;</span>
-    
+
     <span class="n">reports</span> <span class="o">=</span> <span class="n">extract_reports</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span><span class="n">token</span><span class="p">)</span>
     <span class="n">file_date</span> <span class="o">=</span> <span class="n">extract_last_file_date</span><span class="p">(</span><span class="n">stock_code</span><span class="p">,</span> <span class="n">target_datetime</span><span class="p">,</span> <span class="n">restrict_to_90d</span><span class="o">=</span><span class="n">restrict_to_90d</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">file_date</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span>
@@ -306,7 +342,14 @@
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No income statement available for </span><span class="si">{</span><span class="n">stock_code</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">file_date</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No cash flow report available for </span><span class="si">{</span><span class="n">stock_code</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">file_date</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
-        <span class="n">reports_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;balanceSheet&quot;</span><span class="p">:</span> <span class="n">bs</span><span class="p">,</span>
+        <span class="n">reports_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;symbol&#39;</span><span class="p">:</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;year&#39;</span><span class="p">:</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s1">&#39;year&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;quarter&#39;</span><span class="p">:</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s1">&#39;quarter&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;form&#39;</span><span class="p">:</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s1">&#39;form&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;startDate&#39;</span><span class="p">:</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s1">&#39;startDate&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;endDate&#39;</span><span class="p">:</span><span class="n">reports</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">file_date</span><span class="p">][</span><span class="s1">&#39;endDate&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;fileDate&#39;</span><span class="p">:</span><span class="n">file_date</span><span class="p">,</span>
+                        <span class="s2">&quot;balanceSheet&quot;</span><span class="p">:</span> <span class="n">bs</span><span class="p">,</span>
                         <span class="s2">&quot;incomeStatement&quot;</span><span class="p">:</span> <span class="n">ic</span><span class="p">,</span>
                         <span class="s2">&quot;cashFlow&quot;</span><span class="p">:</span> <span class="n">cf</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">reports_dict</span></div>
