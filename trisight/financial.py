@@ -2,11 +2,47 @@ import requests
 from trisight import token_check
 from trisight import timeT as t
 import datetime
+from dateutil.relativedelta import *
+import datetime as dt
 import pandas as pd
 pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", None)
 
 token = token_check.get_token(token_check.token)
+
+
+def next_release_date(stock_code, n_months=3, token=token):
+    '''Get next release date (string) within n months from today
+
+    Use example:
+        .. code-block:: python
+
+            next_release_date("AAPL",n_months=1)
+
+    :param stock_code: stock code, ex. "AAPL"
+    :type stock_code: str
+
+    :param n_months: how many months ahead to search release date (defualt=3)
+    :type n_months: int
+
+    :param token: token, optional, ex."btapdan48v6stqoinlu0"
+    :type token: str
+
+    :returns: string date (if exists), False (if not exists)
+    :rtype: str
+    '''
+    now = dt.datetime.now()
+    months_later = now+relativedelta(months=+n_months)
+    str_today = now.strftime("%Y-%m-%d")
+    str_m_after = months_later.strftime("%Y-%m-%d")
+    df=quarterly_estimate_actual(stock_code, now, str_m_after, token=token)
+    if df.shape[0]==0:
+        print(f"No {stock_code} future release found within {n_months} months from today")
+        result= False
+    else:
+        result= df.date.iloc[0]
+    return result
+
 
 def quarterly_estimate_actual(stock_code, from_date, to_date, token=token):
     '''Get estimate vs. actual EPS and revenue of each quarterly report (no info loss)
