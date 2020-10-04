@@ -1,6 +1,6 @@
 import webbrowser
 import requests
-token = "btj810748v6p9f1q5vpg"
+token = "btqj90v48v6t9hddc3bg"
 
 def token_check(token):
     '''Check whether the token is okay
