@@ -9,6 +9,7 @@ pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", None)
 
 token = token_check.get_token(token_check.token)
+api_key = "5a5ff45c6674cc273285168d581aef6b"
 
 
 def next_release_date(stock_code, n_months=3, token=token):
@@ -44,7 +45,7 @@ def next_release_date(stock_code, n_months=3, token=token):
     return result
 
 
-def quarterly_estimate_actual(stock_code, from_date, to_date, token=token):
+def quarterly_estimate_actual(stock_code, from_date, to_date, api_key=api_key):
     '''Get estimate vs. actual EPS and revenue of each quarterly report (no info loss)
 
     Use example:
@@ -69,10 +70,21 @@ def quarterly_estimate_actual(stock_code, from_date, to_date, token=token):
     :rtype: pd.DataFrame
 
     '''
+    # finnhub
+    # req=f'https://finnhub.io/api/v1/calendar/earnings?from={from_date}&to={to_date}&symbol={stock_code}&token={token}'
+    # req=requests.get(req).json()
+    # df=pd.DataFrame(req['earningsCalendar'])
 
-    req=f'https://finnhub.io/api/v1/calendar/earnings?from={from_date}&to={to_date}&symbol={stock_code}&token={token}'
+    # modeling: only company
+    # req= f'https://financialmodelingprep.com/api/v3/historical/earning_calendar/{stock_code}?from={from_date}&to={to_date}&apikey={api_key}'
+    # req=requests.get(req).json()
+    # df=pd.DataFrame(req)
+    # df.head()
+
+    req=f"https://financialmodelingprep.com/api/v3/earning_calendar?from={from_date}&to={to_date}&apikey={api_key}"
     req=requests.get(req).json()
-    df=pd.DataFrame(req['earningsCalendar'])
+    df=pd.DataFrame(req)
+    df = df[df.symbol==stock_code].reset_index(drop=True)
 
     return df
 
