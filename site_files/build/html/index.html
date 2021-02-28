@@ -83,7 +83,12 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Welcome to Trisight’s documentation!</a></li>
-<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#modules">Modules</a><ul>
+<li><a class="reference internal" href="#module-trisight.timeT">timeT</a></li>
+<li><a class="reference internal" href="#financial">financial</a></li>
+<li><a class="reference internal" href="#token-check">token_check</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </div>
@@ -154,15 +159,22 @@
 <h1>Welcome to Trisight’s documentation!<a class="headerlink" href="#welcome-to-trisight-s-documentation" title="Permalink to this headline">¶</a></h1>
 <p>This provides functions to analyze stock data.</p>
 </div>
-<div class="section" id="functions">
-<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<span class="target" id="module-trisight"></span><span class="target" id="module-trisight.timeT"></span><dl class="py function">
+<div class="section" id="module-trisight.timeT">
+<span id="timet"></span><h2>timeT<a class="headerlink" href="#module-trisight.timeT" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
 <dt id="trisight.timeT.dt_to_stamp">
 <code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">dt_to_stamp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#dt_to_stamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.dt_to_stamp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transfer date time to timestamp
-Use example: dt_to_stamp(datetime.now())</p>
+<dd><p>Transfer date time to timestamp</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dt_to_stamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>dt_str</strong> (<em>str</em>) – date time, such as ‘2020-09-01 11:15:49’ (%Y-%m-%d %H:%M:%S)</p>
@@ -179,8 +191,13 @@ Use example: dt_to_stamp(datetime.now())</p>
 <dl class="py function">
 <dt id="trisight.timeT.stamp_to_dt">
 <code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">stamp_to_dt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timestamp</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#stamp_to_dt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.stamp_to_dt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transfer timestamp to date time
-Use example: stamp_to_dt(1590988249)</p>
+<dd><p>Transfer timestamp to date time</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stamp_to_dt</span><span class="p">(</span><span class="mi">1590988249</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>timestamp</strong> (<em>timestamp</em>) – timestamp to be transformed</p>
@@ -197,8 +214,13 @@ Use example: stamp_to_dt(1590988249)</p>
 <dl class="py function">
 <dt id="trisight.timeT.str_to_dt">
 <code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">str_to_dt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dt_str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#str_to_dt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.str_to_dt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transfer string format date time to date time
-Use example: str_to_dt(‘2020-09-01 11:15:50’)</p>
+<dd><p>Transfer string format date time to date time</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">str_to_dt</span><span class="p">(</span><span class="s1">&#39;2020-09-01 11:15:50&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>dt_str</strong> (<em>str</em>) – date time in string format, such as ‘2020-09-01 11:15:49’ (%Y-%m-%d %H:%M:%S)</p>
@@ -215,8 +237,13 @@ Use example: str_to_dt(‘2020-09-01 11:15:50’)</p>
 <dl class="py function">
 <dt id="trisight.timeT.str_to_stamp">
 <code class="sig-prename descclassname">trisight.timeT.</code><code class="sig-name descname">str_to_stamp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dt_str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/timeT.html#str_to_stamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.timeT.str_to_stamp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transfer string to timestamp
-Use example: str_to_stamp(‘2020-09-01 11:15:50’)</p>
+<dd><p>Transfer string to timestamp</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">str_to_stamp</span><span class="p">(</span><span class="s1">&#39;2020-09-01 11:15:50&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>dt_str</strong> (<em>str</em>) – string date time, such as ‘2020-09-01 11:15:49’ (%Y-%m-%d %H:%M:%S)</p>
@@ -230,6 +257,205 @@ Use example: str_to_stamp(‘2020-09-01 11:15:50’)</p>
 </dl>
 </dd></dl>
 
+</div>
+<div class="section" id="financial">
+<h2>financial<a class="headerlink" href="#financial" title="Permalink to this headline">¶</a></h2>
+<p>financial info analysis</p>
+<span class="target" id="module-trisight.financial"></span><dl class="py function">
+<dt id="trisight.financial.extract_last_file_date">
+<code class="sig-prename descclassname">trisight.financial.</code><code class="sig-name descname">extract_last_file_date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stock_code</span></em>, <em class="sig-param"><span class="n">target_datetime</span></em>, <em class="sig-param"><span class="n">restrict_to_90d</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">'btj810748v6p9f1q5vpg'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/financial.html#extract_last_file_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.financial.extract_last_file_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the report file date of a company right before target date time within 90d/1y</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extract_last_file_date</span><span class="p">(</span><span class="s2">&quot;AAL&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-09-20 00:00:00&quot;</span><span class="p">)</span>
+<span class="n">extract_last_file_date</span><span class="p">(</span><span class="s2">&quot;AAL&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-09-20 00:00:00&quot;</span><span class="p">,</span> <span class="n">restrict_to_90d</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stock_code</strong> (<em>str</em>) – stock code, ex. “AAPL”</p></li>
+<li><p><strong>target_datetime</strong> (<em>str</em>) – target date time, “2019-10-24 00:00:00”</p></li>
+<li><p><strong>restrict_to_90d</strong> (<em>bool</em>) – default is True(only check previous 90d), False(check previous 1y)</p></li>
+<li><p><strong>token</strong> (<em>str</em>) – token, optional, ex.”btapdan48v6stqoinlu0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>file date right before 90d/1y <strong>or</strong> False (if not found)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.financial.extract_recent_reports">
+<code class="sig-prename descclassname">trisight.financial.</code><code class="sig-name descname">extract_recent_reports</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stock_code</span></em>, <em class="sig-param"><span class="n">target_datetime</span></em>, <em class="sig-param"><span class="n">restrict_to_90d</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">'btj810748v6p9f1q5vpg'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/financial.html#extract_recent_reports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.financial.extract_recent_reports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the most recent report dict of a company &lt;= target date time (within 90d/1y)</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extract_recent_reports</span><span class="p">(</span><span class="s2">&quot;AAL&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-09-20 00:00:00&quot;</span><span class="p">)</span>
+<span class="n">extract_recent_reports</span><span class="p">(</span><span class="n">stock_code</span><span class="o">=</span><span class="s2">&quot;AAL&quot;</span><span class="p">,</span><span class="n">target_datetime</span><span class="o">=</span><span class="s2">&quot;2020-09-26 00:00:00&quot;</span><span class="p">,</span> <span class="n">restrict_to_90d</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stock_code</strong> (<em>str</em>) – stock code, ex. “AAPL”</p></li>
+<li><p><strong>target_datetime</strong> (<em>str</em>) – target date time, “2019-10-24 00:00:00”</p></li>
+<li><p><strong>restrict_to_90d</strong> (<em>bool</em>) – default is True(only check previous 90d), False(check previous 1y)</p></li>
+<li><p><strong>token</strong> (<em>str</em>) – token, optional, ex.”btapdan48v6stqoinlu0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>recent report dict (keys: [“balanceSheet”,”incomeStatement”,”cashFlow”, …], each can extract a dataframe)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.financial.extract_reports">
+<code class="sig-prename descclassname">trisight.financial.</code><code class="sig-name descname">extract_reports</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stock_code</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">'btj810748v6p9f1q5vpg'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/financial.html#extract_reports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.financial.extract_reports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all finantial statements (balance sheet, income statement, cash flow) of a company</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extract_reports</span><span class="p">(</span><span class="s2">&quot;UAL&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stock_code</strong> (<em>str</em>) – stock code, ex. “AAPL”</p></li>
+<li><p><strong>token</strong> (<em>str</em>) – token, optional, ex.”btapdan48v6stqoinlu0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dataframe (row: a set of quarterly financial report, in “report” json column))</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.financial.next_release_date">
+<code class="sig-prename descclassname">trisight.financial.</code><code class="sig-name descname">next_release_date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stock_code</span></em>, <em class="sig-param"><span class="n">n_months</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">'btj810748v6p9f1q5vpg'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/financial.html#next_release_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.financial.next_release_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get next release date (string) within n months from today</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">next_release_date</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span><span class="n">n_months</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stock_code</strong> (<em>str</em>) – stock code, ex. “AAPL”</p></li>
+<li><p><strong>n_months</strong> (<em>int</em>) – how many months ahead to search release date (defualt=3)</p></li>
+<li><p><strong>token</strong> (<em>str</em>) – token, optional, ex.”btapdan48v6stqoinlu0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>string date (if exists), False (if not exists)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.financial.quarterly_estimate_actual">
+<code class="sig-prename descclassname">trisight.financial.</code><code class="sig-name descname">quarterly_estimate_actual</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stock_code</span></em>, <em class="sig-param"><span class="n">from_date</span></em>, <em class="sig-param"><span class="n">to_date</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">'btj810748v6p9f1q5vpg'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/financial.html#quarterly_estimate_actual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.financial.quarterly_estimate_actual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get estimate vs. actual EPS and revenue of each quarterly report (no info loss)</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">quarterly_estimate_actual</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-08-31&quot;</span><span class="p">,</span><span class="s2">&quot;2020-09-11&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stock_code</strong> (<em>str</em>) – stock code, ex. “AAPL”</p></li>
+<li><p><strong>from_date</strong> (<em>str</em>) – time string, ex.”2020-09-11”</p></li>
+<li><p><strong>to_date</strong> – time string, ex.”2020-09-11”</p></li>
+</ul>
+</dd>
+</dl>
+<p>:type to_date:str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>token</strong> (<em>str</em>) – token, optional, ex.”btapdan48v6stqoinlu0”</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dataframe (row: report)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="token-check">
+<h2>token_check<a class="headerlink" href="#token-check" title="Permalink to this headline">¶</a></h2>
+<p>get right token for api</p>
+<span class="target" id="module-trisight.token_check"></span><dl class="py function">
+<dt id="trisight.token_check.get_token">
+<code class="sig-prename descclassname">trisight.token_check.</code><code class="sig-name descname">get_token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">token</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/token_check.html#get_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.token_check.get_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check token. If not good, let the user to enter the right token.</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_token</span><span class="p">(</span><span class="s2">&quot;btj810748v6p9f1q5vpg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>token</strong> (<em>str</em>) – default token to check, can be empty if not know</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>correct token to use</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="trisight.token_check.token_check">
+<code class="sig-prename descclassname">trisight.token_check.</code><code class="sig-name descname">token_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">token</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisight/token_check.html#token_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisight.token_check.token_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the token is okay</p>
+<dl>
+<dt>Use example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">token_check</span><span class="p">(</span><span class="s2">&quot;btj810748v6p9f1q5vpg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>token</strong> (<em>str</em>) – token to test</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True (okay), False (not okay)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>

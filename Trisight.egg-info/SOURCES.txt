@@ -1,11 +1,15 @@
+README.md
 setup.py
 Trisight.egg-info/MANIFEST.in
 Trisight.egg-info/PKG-INFO
 Trisight.egg-info/SOURCES.txt
 Trisight.egg-info/dependency_links.txt
 Trisight.egg-info/top_level.txt
+trisight/Trisight.py
 trisight/__init__.py
+trisight/financial.py
 trisight/timeT.py
+trisight/token_check.py
 trisight.egg-info/MANIFEST.in
 trisight.egg-info/PKG-INFO
 trisight.egg-info/SOURCES.txt
