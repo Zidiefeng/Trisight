@@ -44,5 +44,5 @@ make html
 
 # Contributor
 
-# Data scientist: Gaohua Zheng
+- Gaohua Zheng
 - Zidiefeng
